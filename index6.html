@@ -18,21 +18,22 @@
             font-family: Arial, Helvetica, sans-serif;
         }
         .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
+            position: relative;
+            background-color: white;
+            padding: 30px;
+            border-radius: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             text-align: left;
-            width: 300px;
+            width: 350px;
         }
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #333;
             text-align: center;
         }
         label, input, button {
             display: block;
-            width: 100%;
+            width: 50%;
             margin-bottom: 10px;
         }
         button {
@@ -47,6 +48,17 @@
         button:hover {
             background-color: darkblue;
         }
+        .user-icon {
+            position: absolute;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-40%);
+            width: 120px; 
+            height: 120px;
+            background-image: url('3rd.jpg');
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
 <body>
@@ -59,6 +71,7 @@
             <input type="password" id="password" name="password" required>
             <button type="button" onclick="login()">Login</button>
         </form>
+		<div class="user-icon"></div>
     </div>
 
     <script>
