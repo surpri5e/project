@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME AISATINO</title>
+    <style>
+        body {
+            background-image: url('aisat02.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            background-color: white;
+            color: #333;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            width: 300px;
+        }
+        h1{
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: black;
+            color: aliceblue;
+        }
+        label, input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        button {
+            width: auto;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Information</h1>
+        <p>FILL THE FORM IN ALL CAPITAL LETTERS</p>
+        <form id="studentInfoForm">
+            <label for="ln">LAST NAME:</label>
+            <input type="text" id="ln" name="ln" required>
+            <label for="fn">FIRST NAME:</label>
+            <input type="text" id="fn" name="fn" required>
+            <label for="mn">MIDDLE NAME:</label>
+            <input type="text" id="mn" name="mn" required>
+            <label for="birthday">BIRTHDAY:</label>
+            <input type="date" id="birthday" name="birthday" required>
+            <label for="course">COURSE:</label>
+            <input type="text" id="course" name="course" required>
+            <label for="studnum">STUDENT NUMBER:</label>
+            <input type="text" id="studnum" name="studnum" required>
+            <label for="email">EMAIL:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="section">SECTION:</label>
+            <button type="button" onclick="submitStudentInfo()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function generateReferenceNumber() {
+            return 'REF' + Math.floor(Math.random() * 1000000);
+        }
+
+        function generateSection(course) {
+            const courseSections = {
+                "COMPUTER SCIENCE": ["CS101", "CS102", "CS103", "CS104", "CS105"],
+                "INFORMATION TECHNOLOGY": ["IT201", "IT202", "IT203", "IT204", "IT205"],
+                "ENGINEERING": ["ENG301", "ENG302", "ENG303", "ENG304", "ENG305"],
+                "BUSINESS ADMINISTRATION": ["BUS401", "BUS402", "BUS403", "BUS404", "BUS405"]
+            };
+
+            const upperCaseCourse = course.toUpperCase();
+            const sections = courseSections[upperCaseCourse];
+            if (sections) {
+                return sections[Math.floor(Math.random() * sections.length)];
+            } else {
+                return "GEN001";
+            }
+        }
+
+        function validateForm() {
+            const ln = document.getElementById('ln').value;
+            const fn = document.getElementById('fn').value;
+            const mn = document.getElementById('mn').value;
+            const birthday = document.getElementById('birthday').value;
+            const course = document.getElementById('course').value;
+            const studnum = document.getElementById('studnum').value;
+            const email = document.getElementById('email').value;
+
+            if (!ln || !fn || !mn || !birthday || !course || !email) {
+                alert('Your information is not complete. Please fill all the information first!.');
+                return false;
+            }
+            return true;
+        }
+
+        function submitStudentInfo() {
+            if (!validateForm()) {
+                return;
+            }
+
+            const course = document.getElementById('course').value.trim();
+            const section = generateSection(course);
+            console.log("Course:", course);
+            console.log("Generated Section:", section);
+
+            const studentInfo = {
+                ln: document.getElementById('ln').value,
+                fn: document.getElementById('fn').value,
+                mn: document.getElementById('mn').value,
+                birthday: document.getElementById('birthday').value,
+                course: course,
+                section: section,
+                studnum: document.getElementById('studnum').value,
+                email: document.getElementById('email').value,
+            };
+
+            localStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+
+            alert('Registration Successful');
+            window.location.href = 'index2.html';
+        }
+    </script>
+</body>
+</html>

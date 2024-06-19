@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME AISATINO</title>
+    <style>
+        body {
+    background-image: url('aisat02.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+ 
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+}
+
+.left-column {
+    position: relative;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column {
+    width: 70%;
+}
+
+h1 {
+    position: absolute;
+    top: -60px;
+    right: 10px;
+    padding: 5px 10px;
+    transform: translateX(60%);
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 1px;
+}
+
+p{
+    text-align: left;
+    align-items: left;
+    line-height: 0.1;
+}
+
+h2, table {
+    color: #333;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 2px solid #333;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+ul {
+    text-align: left;
+    padding: -10px;
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: darkblue;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="logout-button" onclick="logout()">Logout</button>
+        <div class="left-column">
+            <h1>STUDENTS PORTAL</h1>
+            <h2>STUDENT INFORMATION</h2>
+            <p>Student Number: 311812</p>
+            <p>Full Name: DELA CRUZ, JEWEL CLEMENTE</p>
+            <p>Birthday: 11/10/1999</p>
+            <p>Course: COMPUTER SCIENCE</p>
+            <p>Section: CS103</p>
+            <p>Email: aisat.delacruz311812@gmail.com</p>
+
+            <p>GRADING SYSTEM:</p>
+            <ul>
+                <li>1.00 is equivalent to 96-100</li>
+                <li>1.25 is equivalent to 94-95</li>
+                <li>1.50 is equivalent to 92-93</li>
+                <li>2.50 is equivalent to 80-83</li>
+                <li>2.75 is equivalent to 78-79</li>
+                <li>3.00 is equivalent to 75-77</li>
+                <li>5.00 is FAILED</li>
+                <li>INC is for INCOMPLETE</li>
+                <li>DR is for DROPPED</li>
+            </ul>
+        </div>
+
+        <div class="right-column">
+            <h2>SUBJECTS AND GRADES</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>SUBJECT</th>
+                        <th>GRADE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="subject-cc101"><td>CC101</td><td><input type="text" id="grade-cc101" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-cc102"><td>CC102</td><td><input type="text" id="grade-cc102" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-fil1"><td>FIL 1</td><td><input type="text" id="grade-fil1" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-mmw"><td>MMW</td><td><input type="text" id="grade-mmw" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-aa"><td>AA</td><td><input type="text" id="grade-aa" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-sts"><td>STS</td><td><input type="text" id="grade-sts" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-nstp1"><td>NSTP 1</td><td><input type="text" id="grade-nstp1" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-pe1"><td>PE 1</td><td><input type="text" id="grade-pe1" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-pl101"><td>PL101</td><td><input type="text" id="grade-pl101" oninput="calculateAverage()"></td></tr>
+                    <tr id="subject-average"><td>AVERAGE</td><td id="average-grade"></td></tr>
+                </tbody>
+                           
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calculateAverage() {
+            let gradeInputs = document.querySelectorAll('tbody tr:not(#subject-average) input[type="text"]');
+            let totalGrades = 0;
+            let countGrades = 0;
+    
+            gradeInputs.forEach(function(input) {
+                let grade = parseFloat(input.value);
+                if (!isNaN(grade)) {
+                    totalGrades += grade;
+                    countGrades++;
+                }
+            });
+    
+            let average = totalGrades / countGrades;
+    
+            let averageCell = document.getElementById('average-grade');
+            if (isNaN(average)) {
+                averageCell.textContent = '';
+            } else {
+                averageCell.textContent = average.toFixed(2);
+            }
+        }
+    
+        function loadStudentInfo() {
+            calculateAverage();
+        }
+    
+        function logout() {
+            localStorage.removeItem('studentInfo');
+            window.location.href = 'index.html';
+            alert('Logout Successful');
+        }
+    
+        window.onload = loadStudentInfo;
+    </script>
+    
+</body>
+</html>
